@@ -111,11 +111,11 @@ services:
 
   cli.peer:
     container_name: cli.${ORG:-org1}.${DOMAIN:-example.com}
-#    build:
-#      args:
-#        FABRIC_VERSION: ${FABRIC_VERSION:-latest}
-#      context: ./fabric-tools-extended
-    image: olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-snapshot-0.7-1.4.1}
+    build:
+      args:
+        FABRIC_VERSION: ${FABRIC_VERSION:-latest}
+      context: ./fabric-tools-extended
+    image: olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
     tty: true
     environment:
       - ORG=${ORG:-org1}
@@ -148,7 +148,7 @@ services:
   # fabric-rest api server
   api:
 #    build: ../fabric-starter-rest
-    image: olegabu/fabric-starter-rest:${FABRIC_STARTER_VERSION:-snapshot-0.7-1.4.1}
+    image: olegabu/fabric-starter-rest:${FABRIC_STARTER_REST_VERSION:-snapshot-0.7-1.4.1}
     container_name: api.${ORG:-org1}.${DOMAIN:-example.com}
 #    ports:
 #      - ${API_PORT:-4000}:3000

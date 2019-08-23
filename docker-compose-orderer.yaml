@@ -32,9 +32,11 @@ services:
       - ./data-orderer:/var/hyperledger/production/orderer
 
   cli.orderer:
-    container_name: cli.${DOMAIN:-example.com}
-#    build: ./fabric-tools-extended
-    image: olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-snapshot-0.7-1.4.1}
+    build:
+      args:
+        FABRIC_VERSION: ${FABRIC_VERSION:-latest}
+      context: ./fabric-tools-extended
+    image: olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
     tty: true
     environment:
     - DOMAIN=${DOMAIN:-example.com}
