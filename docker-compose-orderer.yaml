@@ -66,3 +66,10 @@ services:
 #      - ${WWW_PORT:-8080}:80
     volumes:
       - ./crypto-config/ordererOrganizations/${DOMAIN:-example.com}/msp:/usr/share/nginx/html/msp
+
+networks:
+  default:
+    name: fabric-starter_default
+    driver: bridge
+    driver_opts:
+      com.docker.network.driver.mtu: ${MTU:-1500}
