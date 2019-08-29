@@ -29,7 +29,7 @@ services:
       - ./crypto-config/configtx:/etc/hyperledger/configtx
       - ./crypto-config/ordererOrganizations/${DOMAIN:-example.com}/orderers/orderer.${DOMAIN:-example.com}/:/etc/hyperledger/crypto/orderer
       #- orderer:/var/hyperledger/production/orderer
-      - ./data-orderer:/var/hyperledger/production/orderer
+      - ./data/orderer:/var/hyperledger/production/orderer
 
   cli.orderer:
     container_name: cli.${DOMAIN:-example.com}
