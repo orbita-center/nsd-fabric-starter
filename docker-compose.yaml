@@ -37,42 +37,44 @@ services:
     volumes:
       - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/ca/:/etc/hyperledger/fabric-ca-server-config
       - ./crypto-config/fabric-ca-server-config-${ORG:-org1}.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-config.yaml
+    restart: always
 
   peer0:
     << : *peer-defaults
     container_name: peer0.${ORG:-org1}.${DOMAIN:-example.com}
     environment:
-    - CORE_PEER_ID=peer0.${ORG:-org1}.${DOMAIN:-example.com}
-    - CORE_PEER_LOCALMSPID=${ORG:-org1}
-    - CORE_PEER_ADDRESS=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
+      - CORE_PEER_ID=peer0.${ORG:-org1}.${DOMAIN:-example.com}
+      - CORE_PEER_LOCALMSPID=${ORG:-org1}
+      - CORE_PEER_ADDRESS=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
 
-    - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-    # the following setting starts chaincode containers on the same
-    # bridge network as the peers
-    # https://docs.docker.com/compose/networking/
-    - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric-starter_default
-    - CORE_VM_DOCKER_ATTACHSTDOUT=true
-#    - CORE_LOGGING_LEVEL=DEBUG
-    - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
-    - CORE_CHAINCODE_LOGGING_SHIM=debug
-    - CORE_PEER_GOSSIP_USELEADERELECTION=true
-    - CORE_PEER_GOSSIP_ORGLEADER=false
-    - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
-    - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
-    # The following setting skips the gossip handshake since we are
-    # are not doing mutual TLS
-    - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
-    - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
-    - CORE_PEER_TLS_ENABLED=true
-    - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
-    - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
-    - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      # the following setting starts chaincode containers on the same
+      # bridge network as the peers
+      # https://docs.docker.com/compose/networking/
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric-starter_default
+      - CORE_VM_DOCKER_ATTACHSTDOUT=true
+      #- CORE_LOGGING_LEVEL=DEBUG
+      - CORE_CHAINCODE_LOGGING_LEVEL=DEBUG
+      - CORE_CHAINCODE_LOGGING_SHIM=debug
+      - CORE_PEER_GOSSIP_USELEADERELECTION=true
+      - CORE_PEER_GOSSIP_ORGLEADER=false
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.${ORG:-org1}.${DOMAIN:-example.com}:7051
+      # The following setting skips the gossip handshake since we are
+      # are not doing mutual TLS
+      - CORE_PEER_GOSSIP_SKIPHANDSHAKE=true
+      - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/crypto/peer/msp
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/crypto/peer/tls/server.key
+      - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/crypto/peer/tls/server.crt
+      - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
 
     volumes:
-    - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer0.${ORG:-org1}.${DOMAIN:-example.com}/:/etc/hyperledger/crypto/peer
-    #- peer0:/var/hyperledger/production
-    - ./data/peer0:/var/hyperledger/production
-    - /var/run/:/host/var/run/
+      - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer0.${ORG:-org1}.${DOMAIN:-example.com}/:/etc/hyperledger/crypto/peer
+      #- peer0:/var/hyperledger/production
+      - ./data/peer0:/var/hyperledger/production
+      - /var/run/:/host/var/run/
+    restart: always
 
   cli.peer:
     container_name: cli.${ORG:-org1}.${DOMAIN:-example.com}
@@ -100,15 +102,16 @@ services:
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/crypto/peer/tls/ca.crt
     working_dir: /etc/hyperledger
     volumes:
-    - /var/run/:/host/var/run/
-    - ./chaincode:/opt/chaincode
-    - ./chaincode/go:/opt/gopath/src
-    - ./crypto-config:/etc/hyperledger/crypto-config
-    - ${FABRIC_STARTER_HOME:-.}/templates:/etc/hyperledger/templates
-    - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/users/Admin@${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peeradmin
-    - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer0.${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peer
-    - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer1.${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peer1
-    - ./crypto-config/ordererOrganizations/${DOMAIN:-example.com}/msp:/etc/hyperledger/crypto/orderer
+      - /var/run/:/host/var/run/
+      - ./chaincode:/opt/chaincode
+      - ./chaincode/go:/opt/gopath/src
+      - ./crypto-config:/etc/hyperledger/crypto-config
+      - ${FABRIC_STARTER_HOME:-.}/templates:/etc/hyperledger/templates
+      - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/users/Admin@${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peeradmin
+      - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer0.${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peer
+      - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/peers/peer1.${ORG:-org1}.${DOMAIN:-example.com}:/etc/hyperledger/crypto/peer1
+      - ./crypto-config/ordererOrganizations/${DOMAIN:-example.com}/msp:/etc/hyperledger/crypto/orderer
+    restart: always
 
   # fabric-rest api server
   api:
@@ -136,6 +139,7 @@ services:
       - ./webapp:/usr/src/app/webapp
       - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/msp:/usr/src/app/msp
     command: sh -c "sleep 15 && npm start"
+    restart: always
 
   # simple http server to disseminate certificates
   www.peer:
@@ -145,6 +149,7 @@ services:
 #      - ${WWW_PORT:-8081}:80
     volumes:
       - ./crypto-config/peerOrganizations/${ORG:-org1}.${DOMAIN:-example.com}/msp:/usr/share/nginx/html/msp
+    restart: always
 
 networks:
   default:

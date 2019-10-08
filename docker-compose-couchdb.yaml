@@ -24,3 +24,4 @@ services:
     - ${PEER0_COUCHDB_PORT:-5084}:5984
     volumes:
       - ./data/couchdb0:/opt/couchdb/data
+    restart: always
