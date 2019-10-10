@@ -1,1 +1,0 @@
-{"version":3,"file":"dataResult.js","sourceRoot":"","sources":["../../src/models/dataResult.ts"],"names":[],"mappings":";;AAEA,MAAa,UAAU;IAMZ,SAAS,CAAC,EAAS;QACtB,IAAI,CAAC,KAAK,GAAC,EAAE,CAAC;QACd,IAAI,CAAC,SAAS,GAAC,KAAK,CAAC;IACzB,CAAC;IAEM,QAAQ,CAAC,GAAK;QACjB,IAAI,CAAC,SAAS,GAAC,IAAI,CAAC;QACpB,IAAI,CAAC,IAAI,GAAC,GAAG,CAAC;IAClB,CAAC;CACJ;AAfD,gCAeC"}

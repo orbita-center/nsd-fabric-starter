@@ -16,7 +16,7 @@ services:
 
   couchdb.peer0:
     container_name: couchdb.peer0.${ORG:-org1}.${DOMAIN:-example.com}
-    image: hyperledger/fabric-couchdb
+    image: hyperledger/fabric-couchdb:${FABRIC_STARTER_COUCHDB_VERSION:-latest}
     environment:
     - COUCHDB_USER=
     - COUCHDB_PASSWORD=
