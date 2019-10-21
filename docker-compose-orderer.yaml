@@ -11,7 +11,7 @@ services:
 
   orderer:
     container_name: orderer.${DOMAIN:-example.com}
-    image: hyperledger/fabric-orderer:${FABRIC_VERSION:-1.4.2}
+    image: ${DOCKER_REGISTRY:-docker.io}/hyperledger/fabric-orderer:${FABRIC_VERSION:-1.4.2}
     environment:
       - ORDERER_GENERAL_LOGLEVEL=debug
       - ORDERER_GENERAL_LISTENADDRESS=0.0.0.0
@@ -38,7 +38,7 @@ services:
       args:
         FABRIC_VERSION: ${FABRIC_VERSION:-latest}
       context: ./fabric-tools-extended
-    image: olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
+    image: ${DOCKER_REGISTRY:-docker.io}/olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
     tty: true
     environment:
       - DOMAIN=${DOMAIN:-example.com}
@@ -65,7 +65,7 @@ services:
 
   # http serves certificates
   www.orderer:
-    image: nginx
+    image: ${DOCKER_REGISTRY:-docker.io}/nginx
     container_name: www.${DOMAIN:-example.com}
 #    ports:
 #      - ${WWW_PORT:-8080}:80
