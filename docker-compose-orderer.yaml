@@ -34,10 +34,10 @@ services:
 
   cli.orderer:
     container_name: cli.${DOMAIN:-example.com}
-    build:
-      args:
-        FABRIC_VERSION: ${FABRIC_VERSION:-latest}
-      context: ./fabric-tools-extended
+    #build:
+    #  args:
+    #    FABRIC_VERSION: ${FABRIC_VERSION:-latest}
+    #  context: ./fabric-tools-extended
     image: ${DOCKER_REGISTRY:-docker.io}/olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
     tty: true
     environment:

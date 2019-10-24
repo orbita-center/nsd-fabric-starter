@@ -78,10 +78,10 @@ services:
 
   cli.peer:
     container_name: cli.${ORG:-org1}.${DOMAIN:-example.com}
-    build:
-      args:
-        FABRIC_VERSION: ${FABRIC_VERSION:-latest}
-      context: ./fabric-tools-extended
+    #build:
+    #  args:
+    #    FABRIC_VERSION: ${FABRIC_VERSION:-latest}
+    #  context: ./fabric-tools-extended
     image: ${DOCKER_REGISTRY:-docker.io}/olegabu/fabric-tools-extended:${FABRIC_STARTER_VERSION:-local}
     tty: true
     environment:
@@ -144,7 +144,7 @@ services:
   # simple http server to disseminate certificates
   www.peer:
     container_name: www.${ORG:-org1}.${DOMAIN:-example.com}
-    image: nginx
+    image: ${DOCKER_REGISTRY:-docker.io}/nginx
 #    ports:
 #      - ${WWW_PORT:-8081}:80
     volumes:
